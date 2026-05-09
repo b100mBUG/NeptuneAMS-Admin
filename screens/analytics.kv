@@ -1,0 +1,144 @@
+#:import dp kivy.metrics.dp
+
+<AnalyticsScreen>:
+    name: "analytics"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "108dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+            padding: "24dp", "8dp", "24dp", "8dp"
+            spacing: "6dp"
+
+            # Row 1: title + class picker
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "44dp"
+                spacing: "12dp"
+
+                MDLabel:
+                    text: "Analytics"
+                    font_style: "Headline"
+                    role: "small"
+                    bold: True
+                    size_hint_x: 1
+                    pos_hint: {"center_y": 0.5}
+
+                MDButton:
+                    id: btn_class
+                    style: "tonal"
+                    size_hint_y: None
+                    height: "40dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.open_class_menu()
+                    MDButtonIcon:
+                        icon: "google-classroom"
+                    MDButtonText:
+                        id: lbl_class_btn
+                        text: "Select class"
+
+            # Row 2: date chips + date buttons + run
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "40dp"
+                spacing: "10dp"
+
+                # Date range chips
+                MDChip:
+                    type: "filter"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.set_range_week()
+                    MDChipText:
+                        text: "Week"
+
+                MDChip:
+                    type: "filter"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.set_range_month()
+                    MDChipText:
+                        text: "Month"
+
+                MDChip:
+                    type: "filter"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.set_range_term()
+                    MDChipText:
+                        text: "Term"
+
+                # Spacer
+                Widget:
+                    size_hint_x: 1
+
+                # Date range buttons
+                MDButton:
+                    style: "outlined"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.pick_start()
+                    MDButtonIcon:
+                        icon: "calendar-start"
+                    MDButtonText:
+                        id: lbl_start
+                        text: "Start"
+
+                MDButton:
+                    style: "outlined"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.pick_end()
+                    MDButtonIcon:
+                        icon: "calendar-end"
+                    MDButtonText:
+                        id: lbl_end
+                        text: "End"
+
+                MDButton:
+                    style: "filled"
+                    size_hint_y: None
+                    height: "36dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.run_analysis()
+                    MDButtonIcon:
+                        icon: "chart-bar"
+                    MDButtonText:
+                        text: "Analyse"
+
+        MDDivider:
+
+        # ── Spinner ───────────────────────────────────────────────────────
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: False
+
+        # ── Charts scroll area ────────────────────────────────────────────
+        MDScrollView:
+            MDBoxLayout:
+                id: charts_container
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: "50dp"
+                padding: "24dp", "20dp", "24dp", "24dp"

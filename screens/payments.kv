@@ -1,0 +1,460 @@
+#:import dp kivy.metrics.dp
+
+# ── Shared row for payment logs ───────────────────────────────────────────────
+<PaymentLogRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "68dp"
+    padding: "0dp", "0dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "20dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "67dp"
+
+        MDIcon:
+            icon: "credit-card-outline"
+            font_size: "22sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "24dp", "24dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+            spacing: "2dp"
+
+            MDLabel:
+                text: root.ref_text
+                font_style: "Body"
+                role: "medium"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.school_text if root.show_school else root.students_text
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+            MDLabel:
+                text: root.students_text if root.show_school else root.date_text
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: None
+            width: "120dp"
+            pos_hint: {"center_y": 0.5}
+            spacing: "2dp"
+
+            MDLabel:
+                text: root.amount_text
+                font_style: "Body"
+                role: "medium"
+                bold: True
+                halign: "right"
+                adaptive_height: True
+
+            MDLabel:
+                text: root.date_text
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                halign: "right"
+                adaptive_height: True
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: None
+            width: "80dp"
+            pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: root.status_text
+                font_style: "Body"
+                role: "small"
+                bold: True
+                halign: "center"
+                adaptive_height: True
+                theme_text_color: "Custom"
+                text_color: root.status_color
+
+    MDDivider:
+
+
+# ── Main screen ───────────────────────────────────────────────────────────────
+<PaymentsScreen>:
+    name: "payments"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Payments & Subscriptions"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDButton:
+                style: "tonal"
+                size_hint: None, None
+                size: "96dp", "40dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.refresh()
+                MDButtonIcon:
+                    icon: "refresh"
+                MDButtonText:
+                    text: "Refresh"
+
+        MDDivider:
+
+        # ── Two-column layout ─────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 0
+
+            # ── LEFT PANEL — school picker + manage ───────────────────────
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: 0.55
+                md_bg_color: app.theme_cls.backgroundColor
+
+                MDScrollView:
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        padding: "24dp", "20dp"
+                        spacing: "20dp"
+
+                        # ── School picker ─────────────────────────────────
+                        MDCard:
+                            style: "elevated"
+                            orientation: "vertical"
+                            radius: [dp(16)]
+                            padding: "20dp"
+                            spacing: "14dp"
+                            adaptive_height: True
+
+                            MDLabel:
+                                text: "Select School"
+                                font_style: "Title"
+                                role: "medium"
+                                bold: True
+                                adaptive_height: True
+
+                            MDButton:
+                                id: btn_school_pick
+                                style: "tonal"
+                                size_hint_y: None
+                                height: "44dp"
+                                on_release: root.open_school_menu()
+                                MDButtonIcon:
+                                    icon: "domain"
+                                MDButtonText:
+                                    id: lbl_school_pick
+                                    text: "Select a school"
+
+                        # ── Subscription status card ───────────────────────
+                        MDCard:
+                            id: sub_card
+                            style: "elevated"
+                            orientation: "vertical"
+                            radius: [dp(16)]
+                            padding: "20dp"
+                            spacing: "10dp"
+                            adaptive_height: True
+                            opacity: 0.4
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                adaptive_height: True
+                                spacing: "8dp"
+
+                                MDIcon:
+                                    icon: "shield-check-outline"
+                                    font_size: "22sp"
+                                    theme_text_color: "Primary"
+                                    size_hint: None, None
+                                    size: "24dp", "24dp"
+                                    pos_hint: {"center_y": 0.5}
+
+                                MDLabel:
+                                    text: "Subscription"
+                                    font_style: "Title"
+                                    role: "medium"
+                                    bold: True
+                                    adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_sub_status
+                                text: "—"
+                                font_style: "Body"
+                                role: "large"
+                                bold: True
+                                adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_sub_dates
+                                text: "—"
+                                font_style: "Body"
+                                role: "medium"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                            MDDivider:
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                adaptive_height: True
+                                spacing: "24dp"
+
+                                MDBoxLayout:
+                                    orientation: "vertical"
+                                    adaptive_height: True
+
+                                    MDLabel:
+                                        text: "Students"
+                                        font_style: "Label"
+                                        role: "small"
+                                        theme_text_color: "Secondary"
+                                        adaptive_height: True
+
+                                    MDLabel:
+                                        id: lbl_sub_students
+                                        text: "—"
+                                        font_style: "Body"
+                                        role: "medium"
+                                        adaptive_height: True
+
+                                MDBoxLayout:
+                                    orientation: "vertical"
+                                    adaptive_height: True
+
+                                    MDLabel:
+                                        text: "Last Amount"
+                                        font_style: "Label"
+                                        role: "small"
+                                        theme_text_color: "Secondary"
+                                        adaptive_height: True
+
+                                    MDLabel:
+                                        id: lbl_sub_amount
+                                        text: "—"
+                                        font_style: "Body"
+                                        role: "medium"
+                                        adaptive_height: True
+
+                        # ── Payment initiation card ────────────────────────
+                        MDCard:
+                            style: "elevated"
+                            orientation: "vertical"
+                            radius: [dp(16)]
+                            padding: "20dp"
+                            spacing: "14dp"
+                            adaptive_height: True
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                adaptive_height: True
+                                spacing: "8dp"
+
+                                MDIcon:
+                                    icon: "bank-transfer"
+                                    font_size: "22sp"
+                                    theme_text_color: "Primary"
+                                    size_hint: None, None
+                                    size: "24dp", "24dp"
+                                    pos_hint: {"center_y": 0.5}
+
+                                MDLabel:
+                                    text: "Initiate Payment"
+                                    font_style: "Title"
+                                    role: "medium"
+                                    bold: True
+                                    adaptive_height: True
+
+                            MDLabel:
+                                text: "Amount is calculated automatically from current active student count."
+                                font_style: "Body"
+                                role: "small"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                            MDTextField:
+                                id: billing_email
+                                mode: "outlined"
+                                size_hint_y: None
+                                height: "52dp"
+                                MDTextFieldHintText:
+                                    text: "Billing email"
+                                MDTextFieldLeadingIcon:
+                                    icon: "email-outline"
+
+                            MDButton:
+                                id: btn_pay
+                                style: "filled"
+                                size_hint_y: None
+                                height: "44dp"
+                                on_release: root.initiate_payment()
+                                MDButtonIcon:
+                                    icon: "open-in-new"
+                                MDButtonText:
+                                    text: "Open Paystack Checkout"
+
+                            MDDivider:
+
+                            MDLabel:
+                                text: "Verify a payment"
+                                font_style: "Label"
+                                role: "large"
+                                bold: True
+                                adaptive_height: True
+
+                            MDTextField:
+                                id: verify_ref
+                                mode: "outlined"
+                                size_hint_y: None
+                                height: "52dp"
+                                MDTextFieldHintText:
+                                    text: "Paystack reference (auto-filled after checkout)"
+                                MDTextFieldLeadingIcon:
+                                    icon: "identifier"
+
+                            MDButton:
+                                id: btn_verify
+                                style: "tonal"
+                                disabled: True
+                                size_hint_y: None
+                                height: "44dp"
+                                on_release: root.verify_payment()
+                                MDButtonIcon:
+                                    icon: "check-circle-outline"
+                                MDButtonText:
+                                    text: "Verify Payment"
+
+                            MDLabel:
+                                id: lbl_pay_status
+                                text: ""
+                                font_style: "Body"
+                                role: "small"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                        # ── School payment logs ────────────────────────────
+                        MDCard:
+                            style: "elevated"
+                            orientation: "vertical"
+                            radius: [dp(16)]
+                            padding: "20dp", "16dp"
+                            spacing: "12dp"
+                            adaptive_height: True
+                            size_hint_y: None
+                            height: "360dp"
+
+                            MDLabel:
+                                text: "School Payment History"
+                                font_style: "Title"
+                                role: "medium"
+                                bold: True
+                                adaptive_height: True
+
+                            AnchorLayout:
+                                id: school_spinner_box
+                                size_hint_y: None
+                                height: "0dp"
+                                anchor_x: "center"
+                                MDCircularProgressIndicator:
+                                    id: school_spinner
+                                    size_hint: None, None
+                                    size: "32dp", "32dp"
+                                    active: False
+
+                            MDRecycleView:
+                                id: school_logs_rv
+                                viewclass: "PaymentLogRow"
+                                size_hint_y: 1
+                                RecycleBoxLayout:
+                                    orientation: "vertical"
+                                    default_size: None, "68dp"
+                                    default_size_hint: 1, None
+                                    size_hint_y: None
+                                    height: self.minimum_height
+
+            MDDivider:
+                orientation: "vertical"
+                size_hint_x: None
+                width: "1dp"
+
+            # ── RIGHT PANEL — all platform payment logs ───────────────────
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: 0.45
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "52dp"
+                    padding: "20dp", "0dp"
+                    spacing: "12dp"
+                    md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+                    MDIcon:
+                        icon: "format-list-bulleted"
+                        font_size: "20sp"
+                        theme_text_color: "Secondary"
+                        size_hint: None, None
+                        size: "22dp", "22dp"
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "All Payment Logs"
+                        font_style: "Title"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        pos_hint: {"center_y": 0.5}
+
+                MDDivider:
+
+                AnchorLayout:
+                    id: all_spinner_box
+                    size_hint_y: None
+                    height: "0dp"
+                    anchor_x: "center"
+                    MDCircularProgressIndicator:
+                        id: all_spinner
+                        size_hint: None, None
+                        size: "32dp", "32dp"
+                        active: False
+
+                MDRecycleView:
+                    id: all_logs_rv
+                    viewclass: "PaymentLogRow"
+                    RecycleBoxLayout:
+                        orientation: "vertical"
+                        default_size: None, "68dp"
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        height: self.minimum_height

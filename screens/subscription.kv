@@ -1,0 +1,468 @@
+#:import dp kivy.metrics.dp
+
+<SubLogRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "65dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "20dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "64dp"
+
+        MDIcon:
+            icon: "credit-card-check-outline"
+            font_size: "22sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "24dp", "24dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+            spacing: "2dp"
+
+            MDLabel:
+                text: root.ref_text
+                font_style: "Body"
+                role: "medium"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.students_text
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: None
+            width: "130dp"
+            pos_hint: {"center_y": 0.5}
+            spacing: "2dp"
+
+            MDLabel:
+                text: root.amount_text
+                font_style: "Body"
+                role: "medium"
+                bold: True
+                halign: "right"
+                adaptive_height: True
+
+            MDLabel:
+                text: root.date_text
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                halign: "right"
+                adaptive_height: True
+
+        MDLabel:
+            text: root.status_text
+            font_style: "Body"
+            role: "small"
+            bold: True
+            size_hint_x: None
+            width: "72dp"
+            halign: "center"
+            adaptive_height: True
+            pos_hint: {"center_y": 0.5}
+            theme_text_color: "Custom"
+            text_color: root.status_color
+
+    MDDivider:
+
+
+<SubscriptionScreen>:
+    name: "subscription"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Subscription"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDButton:
+                style: "tonal"
+                size_hint: None, None
+                size: "96dp", "40dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.refresh()
+                MDButtonIcon:
+                    icon: "refresh"
+                MDButtonText:
+                    text: "Refresh"
+
+        MDDivider:
+
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "32dp", "24dp"
+                spacing: "24dp"
+
+                AnchorLayout:
+                    id: spinner_box
+                    size_hint_y: None
+                    height: "0dp"
+                    anchor_x: "center"
+                    MDCircularProgressIndicator:
+                        id: spinner
+                        size_hint: None, None
+                        size: "40dp", "40dp"
+                        active: False
+
+                # ── Status banner ─────────────────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "28dp"
+                    spacing: "20dp"
+                    adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDIcon:
+                            icon: "shield-check-outline"
+                            font_size: "40sp"
+                            theme_text_color: "Primary"
+                            size_hint: None, None
+                            size: "44dp", "44dp"
+                            pos_hint: {"center_y": 0.5}
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            spacing: "4dp"
+                            pos_hint: {"center_y": 0.5}
+
+                            MDLabel:
+                                id: lbl_status
+                                text: "—"
+                                font_style: "Headline"
+                                role: "small"
+                                bold: True
+                                adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_days
+                                text: "—"
+                                font_style: "Body"
+                                role: "large"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                    MDDivider:
+
+                    # ── Stat grid ─────────────────────────────────────────
+                    MDGridLayout:
+                        cols: 3
+                        adaptive_height: True
+                        spacing: "8dp"
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            spacing: "4dp"
+                            padding: "0dp", "0dp", "16dp", "0dp"
+
+                            MDLabel:
+                                text: "Period"
+                                font_style: "Label"
+                                role: "medium"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_dates
+                                text: "—"
+                                font_style: "Body"
+                                role: "medium"
+                                adaptive_height: True
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            spacing: "4dp"
+
+                            MDLabel:
+                                text: "Students at payment"
+                                font_style: "Label"
+                                role: "medium"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_students
+                                text: "—"
+                                font_style: "Body"
+                                role: "medium"
+                                adaptive_height: True
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            spacing: "4dp"
+
+                            MDLabel:
+                                text: "Amount paid"
+                                font_style: "Label"
+                                role: "medium"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+
+                            MDLabel:
+                                id: lbl_amount
+                                text: "—"
+                                font_style: "Body"
+                                role: "medium"
+                                bold: True
+                                adaptive_height: True
+
+                # ── Pricing info ──────────────────────────────────────────
+                MDCard:
+                    style: "outlined"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "12dp"
+                    adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "8dp"
+
+                        MDIcon:
+                            icon: "information-outline"
+                            font_size: "20sp"
+                            theme_text_color: "Secondary"
+                            size_hint: None, None
+                            size: "22dp", "22dp"
+                            pos_hint: {"center_y": 0.5}
+
+                        MDLabel:
+                            text: "Annual Pricing"
+                            font_style: "Title"
+                            role: "small"
+                            bold: True
+                            adaptive_height: True
+
+                    MDGridLayout:
+                        cols: 4
+                        adaptive_height: True
+                        spacing: "4dp"
+
+                        MDLabel:
+                            text: "≤ 500 students"
+                            font_style: "Body"
+                            role: "small"
+                            adaptive_height: True
+                            theme_text_color: "Secondary"
+
+                        MDLabel:
+                            text: "≤ 1,000 students"
+                            font_style: "Body"
+                            role: "small"
+                            adaptive_height: True
+                            theme_text_color: "Secondary"
+
+                        MDLabel:
+                            text: "≤ 1,500 students"
+                            font_style: "Body"
+                            role: "small"
+                            adaptive_height: True
+                            theme_text_color: "Secondary"
+
+                        MDLabel:
+                            text: "Every +500"
+                            font_style: "Body"
+                            role: "small"
+                            adaptive_height: True
+                            theme_text_color: "Secondary"
+
+                        MDLabel:
+                            text: "KES 10,000"
+                            font_style: "Body"
+                            role: "small"
+                            bold: True
+                            adaptive_height: True
+
+                        MDLabel:
+                            text: "KES 20,000"
+                            font_style: "Body"
+                            role: "small"
+                            bold: True
+                            adaptive_height: True
+
+                        MDLabel:
+                            text: "KES 30,000"
+                            font_style: "Body"
+                            role: "small"
+                            bold: True
+                            adaptive_height: True
+
+                        MDLabel:
+                            text: "+ KES 10,000"
+                            font_style: "Body"
+                            role: "small"
+                            bold: True
+                            adaptive_height: True
+
+                # ── Initiate payment ─────────────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "14dp"
+                    adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "8dp"
+
+                        MDIcon:
+                            icon: "bank-transfer"
+                            font_size: "22sp"
+                            theme_text_color: "Primary"
+                            size_hint: None, None
+                            size: "24dp", "24dp"
+                            pos_hint: {"center_y": 0.5}
+
+                        MDLabel:
+                            text: "Renew / Pay Now"
+                            font_style: "Title"
+                            role: "medium"
+                            bold: True
+                            adaptive_height: True
+
+                    MDLabel:
+                        text: "Amount is calculated from your current active student count."
+                        font_style: "Body"
+                        role: "small"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                    MDTextField:
+                        id: billing_email
+                        mode: "outlined"
+                        size_hint_y: None
+                        height: "52dp"
+                        MDTextFieldHintText:
+                            text: "Billing email"
+                        MDTextFieldLeadingIcon:
+                            icon: "email-outline"
+
+                    MDButton:
+                        id: btn_pay
+                        style: "filled"
+                        size_hint_y: None
+                        height: "44dp"
+                        on_release: root.initiate_payment()
+                        MDButtonIcon:
+                            icon: "open-in-new"
+                        MDButtonText:
+                            text: "Open Paystack Checkout"
+
+                    MDDivider:
+
+                    MDLabel:
+                        text: "Already paid? Verify manually:"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                    MDTextField:
+                        id: verify_ref
+                        mode: "outlined"
+                        size_hint_y: None
+                        height: "52dp"
+                        MDTextFieldHintText:
+                            text: "Paystack reference (auto-filled after checkout)"
+                        MDTextFieldLeadingIcon:
+                            icon: "identifier"
+
+                    MDButton:
+                        id: btn_verify
+                        style: "tonal"
+                        disabled: True
+                        size_hint_y: None
+                        height: "44dp"
+                        on_release: root.verify_payment()
+                        MDButtonIcon:
+                            icon: "check-circle-outline"
+                        MDButtonText:
+                            text: "Verify Payment"
+
+                    MDLabel:
+                        id: lbl_pay_status
+                        text: ""
+                        font_style: "Body"
+                        role: "small"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                # ── Payment history ───────────────────────────────────────
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "12dp"
+
+                    MDLabel:
+                        text: "Payment History"
+                        font_style: "Title"
+                        role: "large"
+                        bold: True
+                        adaptive_height: True
+
+                    MDCard:
+                        style: "elevated"
+                        orientation: "vertical"
+                        radius: [dp(16)]
+                        padding: "0dp"
+                        size_hint_y: None
+                        height: "380dp"
+
+                        MDRecycleView:
+                            id: logs_rv
+                            viewclass: "SubLogRow"
+                            RecycleBoxLayout:
+                                orientation: "vertical"
+                                default_size: None, "65dp"
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+
+                Widget:
+                    size_hint_y: None
+                    height: "16dp"

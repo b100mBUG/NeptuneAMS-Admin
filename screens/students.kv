@@ -1,0 +1,183 @@
+#:import dp kivy.metrics.dp
+
+<StudentRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "61dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "16dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "60dp"
+
+        MDIcon:
+            icon: "account-circle"
+            font_size: "32sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "32dp", "32dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: root.student_name
+                font_style: "Body"
+                role: "large"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.adm_no
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDIconButton:
+            icon: "pencil-outline"
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_edit()
+
+        MDIconButton:
+            icon: "delete-outline"
+            theme_icon_color: "Custom"
+            icon_color: 0.83, 0.18, 0.18, 1
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_delete()
+
+    MDDivider:
+
+<StudentsScreen>:
+    name: "students"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Students"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDButton:
+                id: class_btn
+                style: "tonal"
+                size_hint_y: None
+                height: "44dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.open_class_menu()
+                MDButtonIcon:
+                    icon: "google-classroom"
+                MDButtonText:
+                    text: "Select class"
+
+            MDLabel:
+                id: count_lbl
+                text: ""
+                font_style: "Body"
+                role: "medium"
+                theme_text_color: "Secondary"
+                adaptive_size: True
+                pos_hint: {"center_y": 0.5}
+
+            MDButton:
+                style: "tonal"
+                size_hint_y: None
+                height: "44dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.open_bulk_dialog()
+                MDButtonIcon:
+                    icon: "upload-outline"
+                MDButtonText:
+                    text: "Bulk Enrol"
+
+        MDDivider:
+
+        # ── Add student bar ───────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "8dp"
+            spacing: "12dp"
+            md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+            MDTextField:
+                id: adm_field
+                mode: "outlined"
+                size_hint_x: None
+                width: "180dp"
+                size_hint_y: None
+                height: "52dp"
+                pos_hint: {"center_y": 0.5}
+                MDTextFieldHintText:
+                    text: "Admission No."
+
+            MDTextField:
+                id: name_field
+                mode: "outlined"
+                size_hint_x: 1
+                size_hint_y: None
+                height: "52dp"
+                pos_hint: {"center_y": 0.5}
+                MDTextFieldHintText:
+                    text: "Student full name"
+                MDTextFieldLeadingIcon:
+                    icon: "account-outline"
+
+            MDButton:
+                id: create_btn
+                style: "filled"
+                size_hint_y: None
+                height: "52dp"
+                size_hint_x: None
+                width: "140dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.create_student()
+                MDButtonIcon:
+                    icon: "plus"
+                MDButtonText:
+                    text: "Add"
+
+        MDDivider:
+
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: False
+
+        MDRecycleView:
+            id: rv
+            viewclass: "StudentRow"
+            RecycleBoxLayout:
+                orientation: "vertical"
+                default_size: None, "60dp"
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height

@@ -1,0 +1,231 @@
+#:import dp kivy.metrics.dp
+
+<SchoolRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "73dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "16dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "72dp"
+
+        MDIcon:
+            icon: "school-outline"
+            font_size: "28sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "28dp", "28dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+            spacing: "2dp"
+
+            MDLabel:
+                text: root.school_name
+                font_style: "Body"
+                role: "large"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.school_slug
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+            MDLabel:
+                text: root.school_stats
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDLabel:
+            text: root.status_text
+            font_style: "Body"
+            role: "medium"
+            bold: True
+            adaptive_height: True
+            size_hint_x: None
+            width: "80dp"
+            pos_hint: {"center_y": 0.5}
+            theme_text_color: "Custom"
+            text_color: root.status_color
+
+        MDIconButton:
+            icon: "pencil-outline"
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_edit()
+
+        MDIconButton:
+            icon: "credit-card-outline"
+            pos_hint: {"center_y": 0.5}
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.primaryColor
+            on_release: root.on_payment()
+
+        MDButton:
+            style: "tonal"
+            size_hint: None, None
+            size: "96dp", "36dp"
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_toggle()
+
+            MDButtonText:
+                text: "Deactivate" if root.is_active else "Activate"
+
+    MDDivider:
+
+<SchoolsScreen>:
+    name: "schools"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Schools"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                id: count_lbl
+                text: ""
+                font_style: "Body"
+                role: "medium"
+                theme_text_color: "Secondary"
+                adaptive_size: True
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        # ── Provision form ────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "136dp"
+            padding: "32dp", "12dp"
+            spacing: "10dp"
+            md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+            MDLabel:
+                text: "Provision New School"
+                font_style: "Label"
+                role: "large"
+                bold: True
+                adaptive_height: True
+                theme_text_color: "Secondary"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "52dp"
+                spacing: "12dp"
+
+                MDTextField:
+                    id: f_school_name
+                    mode: "outlined"
+                    size_hint_y: None
+                    height: "52dp"
+                    MDTextFieldHintText:
+                        text: "School name"
+                    MDTextFieldLeadingIcon:
+                        icon: "school-outline"
+
+                MDTextField:
+                    id: f_school_slug
+                    mode: "outlined"
+                    size_hint_y: None
+                    height: "52dp"
+                    MDTextFieldHintText:
+                        text: "Slug (e.g. sunrise-academy)"
+                    MDTextFieldLeadingIcon:
+                        icon: "identifier"
+
+                MDTextField:
+                    id: f_admin_name
+                    mode: "outlined"
+                    size_hint_y: None
+                    height: "52dp"
+                    MDTextFieldHintText:
+                        text: "Admin name"
+                    MDTextFieldLeadingIcon:
+                        icon: "account-outline"
+
+                MDTextField:
+                    id: f_admin_email
+                    mode: "outlined"
+                    size_hint_y: None
+                    height: "52dp"
+                    MDTextFieldHintText:
+                        text: "Admin email"
+                    MDTextFieldLeadingIcon:
+                        icon: "email-outline"
+
+                MDTextField:
+                    id: f_admin_pwd
+                    mode: "outlined"
+                    password: True
+                    size_hint_y: None
+                    height: "52dp"
+                    MDTextFieldHintText:
+                        text: "Password (min 8)"
+                    MDTextFieldLeadingIcon:
+                        icon: "lock-outline"
+
+                MDButton:
+                    id: provision_btn
+                    style: "filled"
+                    size_hint_y: None
+                    height: "52dp"
+                    size_hint_x: None
+                    width: "160dp"
+                    on_release: root.provision()
+                    MDButtonIcon:
+                        icon: "plus"
+                    MDButtonText:
+                        text: "Provision"
+
+        MDDivider:
+
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: False
+
+        MDRecycleView:
+            id: rv
+            viewclass: "SchoolRow"
+            RecycleBoxLayout:
+                orientation: "vertical"
+                default_size: None, "72dp"
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height

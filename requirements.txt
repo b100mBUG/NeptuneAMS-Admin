@@ -1,0 +1,6 @@
+kivymd @ git+https://github.com/kivymd/KivyMD.git
+kivy>=2.3.0
+kivy_garden.matplotlib
+matplotlib>=3.7.0
+httpx>=0.27.0
+pillow>=10.0.0

@@ -1,0 +1,195 @@
+#:import dp kivy.metrics.dp
+
+<TeacherRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "65dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "16dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "64dp"
+
+        MDIcon:
+            icon: "human-male-board"
+            font_size: "28sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "28dp", "28dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: root.teacher_name
+                font_style: "Body"
+                role: "large"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.teacher_email
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDLabel:
+            text: root.class_names
+            font_style: "Body"
+            role: "small"
+            theme_text_color: "Secondary"
+            adaptive_height: True
+            size_hint_x: None
+            width: "160dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDIconButton:
+            icon: "pencil-outline"
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_edit()
+
+        MDIconButton:
+            icon: "delete-outline"
+            theme_icon_color: "Custom"
+            icon_color: 0.83, 0.18, 0.18, 1
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_delete()
+
+    MDDivider:
+
+<TeachersScreen>:
+    name: "teachers"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Teachers"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                pos_hint: {"center_y": 0.5}
+                size_hint_x: 1
+
+            MDLabel:
+                id: count_lbl
+                text: ""
+                font_style: "Body"
+                role: "medium"
+                theme_text_color: "Secondary"
+                adaptive_size: True
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        # ── Register form ─────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "8dp"
+            spacing: "12dp"
+            md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+            MDTextField:
+                id: teacher_name
+                mode: "outlined"
+                size_hint_y: None
+                height: "52dp"
+                pos_hint: {"center_y": 0.5}
+                MDTextFieldHintText:
+                    text: "Full name"
+                MDTextFieldLeadingIcon:
+                    icon: "account-outline"
+
+            MDTextField:
+                id: teacher_email
+                mode: "outlined"
+                size_hint_y: None
+                height: "52dp"
+                pos_hint: {"center_y": 0.5}
+                MDTextFieldHintText:
+                    text: "Email"
+                MDTextFieldLeadingIcon:
+                    icon: "email-outline"
+
+            MDTextField:
+                id: teacher_pwd
+                mode: "outlined"
+                password: True
+                size_hint_y: None
+                height: "52dp"
+                pos_hint: {"center_y": 0.5}
+                MDTextFieldHintText:
+                    text: "Password (min 8)"
+                MDTextFieldLeadingIcon:
+                    icon: "lock-outline"
+
+            MDButton:
+                id: class_btn
+                style: "tonal"
+                size_hint_y: None
+                height: "52dp"
+                size_hint_x: None
+                width: "160dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.open_class_menu()
+                MDButtonIcon:
+                    icon: "google-classroom"
+                MDButtonText:
+                    text: "Classes..."
+
+            MDButton:
+                id: create_btn
+                style: "filled"
+                size_hint_y: None
+                height: "52dp"
+                size_hint_x: None
+                width: "160dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.create_teacher()
+                MDButtonIcon:
+                    icon: "plus"
+                MDButtonText:
+                    text: "Register"
+
+        MDDivider:
+
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: True
+
+        MDRecycleView:
+            id: rv
+            viewclass: "TeacherRow"
+            RecycleBoxLayout:
+                orientation: "vertical"
+                default_size: None, "64dp"
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height

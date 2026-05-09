@@ -1,0 +1,315 @@
+<AdminLoginScreen>:
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "horizontal"
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.42
+            md_bg_color: app.theme_cls.primaryColor
+            padding: "40dp", "60dp" # More top/bottom padding
+            spacing: "24dp"
+
+            # Logo with a subtle "glow" or border
+            MDCard:
+                radius: [50] # Matches a 100dp size for a perfect circle
+                size_hint: None, None
+                size: "100dp", "100dp"
+                pos_hint: {"center_x": .5}
+                elevation: 3
+                shadow_softness: 12
+                FitImage:
+                    radius: [50]
+                    source: "assets/images/pcs_logo.jpg"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: "4dp"
+                
+                MDLabel:
+                    text: "NeptuneAMS 1.0"
+                    halign: "center"
+                    bold: True
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    font_style: "Display" # M3 Style for big titles
+                    role: "medium"
+                    adaptive_height: True
+
+                MDLabel:
+                    text: "SCHOOL ATTENDANCE REGISTER"
+                    halign: "center"
+                    theme_font_size: "Custom"
+                    font_size: "14sp"
+                    theme_text_color: "Custom"
+                    text_color: [1, 1, 1, 0.8] # Slightly transparent for "Subhead" feel
+                    letter_spacing: "2sp" # Makes it look very premium
+                    adaptive_height: True
+
+            # Carousel with slightly more "lift"
+            Carousel:
+                id: carousel
+                direction: "right"
+                loop: True # Infinite loop!
+                
+                # Pro tip: Wrap your images in a card with a bit of margin
+                MDCard:
+                    radius: [16]
+                    margin: "12dp"
+                    elevation: 2
+                    FitImage:
+                        source: "assets/images/pharmacy1.png"
+                        radius: [16]
+                
+                MDCard:
+                    radius: [16]
+                    padding: dp(10)
+
+                    FitImage:
+                        source: "assets/images/pharmacy2.png"
+                        radius: [16]
+                        keep_ratio: True
+                        allow_stretch: True
+                                
+
+                MDCard:
+                    radius: [16]
+                    padding: dp(10)
+
+                    FitImage:
+                        source: "assets/images/pharmacy3.png"
+                        radius: [16]
+                        keep_ratio: True
+                        allow_stretch: True
+                    
+                        
+                MDCard:
+                    radius: [16]
+                    padding: dp(10)
+
+                    FitImage:
+                        source: "assets/images/pharmacy4.png"
+                        radius: [16]
+                        keep_ratio: True
+                        allow_stretch: True
+                
+                MDCard:
+                    radius: [16]
+                    padding: dp(10)
+
+                    FitImage:
+                        source: "assets/images/pharmacy5.png"
+                        radius: [16]
+                        keep_ratio: True
+                        allow_stretch: True
+
+
+            MDBoxLayout:
+                spacing: "12dp"
+                adaptive_height: True
+                MDDivider:
+                    color: [1, 1, 1, 0.5]
+                    pos_hint: {"center_y": .5}
+                MDLabel:
+                    text: "NEPTUNE"
+                    adaptive_size: True
+                    bold: True
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    font_style: "Headline"
+                    role: "small"
+                MDDivider:
+                    color: [1, 1, 1, 0.5]
+                    pos_hint: {"center_y": .5}
+
+            # Contact Icons - Clean & Minimal
+            MDBoxLayout:
+                adaptive_height: True
+                spacing: "32dp"
+                pos_hint: {"center_x": .5}
+                
+                # Email
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    adaptive_height: True
+                    spacing: "6dp"
+                    pos_hint: {"center_x": .5}
+                    MDIconButton:
+                        icon: "gmail"
+                        theme_bg_color: "Custom"
+                        md_bg_color: [1, 1, 1, 0.15] # Glassmorphism vibe
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+                        pos_hint: {"center_x": .5}
+                        on_release: root.email_form()
+                    MDLabel:
+                        text: "Email"
+                        style: "label"
+                        role: "small"
+                        halign: "center"
+                        text_color: "white"
+
+                # WhatsApp
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    adaptive_height: True
+                    spacing: "6dp"
+                    pos_hint: {"center_x": .5}
+                    MDIconButton:
+                        icon: "whatsapp"
+                        theme_bg_color: "Custom"
+                        md_bg_color: [1, 1, 1, 0.15]
+                        theme_icon_color: "Custom"
+                        pos_hint: {"center_x": .5}
+                        icon_color: "white"
+                        on_release: root.whatsapp_form()
+                    MDLabel:
+                        text: "Chat"
+                        style: "label"
+                        role: "small"
+                        halign: "center"
+                        text_color: "white"
+
+        # ── Right form panel ──────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.58
+            padding: "56dp"
+
+            Widget:
+                size_hint_y: 1
+
+            MDBoxLayout:
+                id: form_box
+                orientation: "vertical"
+                adaptive_height: True
+                spacing: "16dp"
+                opacity: 0
+
+                MDLabel:
+                    id: panel_subtitle
+                    text: "School Admin"
+                    font_style: "Display"
+                    role: "small"
+                    bold: True
+                    adaptive_height: True
+
+                MDLabel:
+                    id: panel_desc
+                    text: "Manage your school.\nMonitor attendance.\nOversee everything."
+                    font_style: "Body"
+                    role: "large"
+                    theme_text_color: "Secondary"
+                    adaptive_height: True
+
+                # Mode toggle
+                MDSegmentedButton:
+                    size_hint_y: None
+                    height: "44dp"
+
+                    MDSegmentedButtonItem:
+                        active: True
+                        on_active: if args[1]: root.set_mode("admin")
+                        MDSegmentButtonLabel:
+                            text: "School Admin"
+
+                    MDSegmentedButtonItem:
+                        on_active: if args[1]: root.set_mode("platform")
+                        MDSegmentButtonLabel:
+                            text: "Platform Admin"
+
+                Widget:
+                    size_hint_y: None
+                    height: "8dp"
+
+                # ── School admin fields ───────────────────────────────────
+                MDBoxLayout:
+                    id: slug_row
+                    size_hint_y: None
+                    height: "56dp"
+                    opacity: 1
+
+                    MDTextField:
+                        id: school_slug_field
+                        mode: "outlined"
+                        MDTextFieldLeadingIcon:
+                            icon: "school-outline"
+                        MDTextFieldHintText:
+                            text: "School slug (e.g. greenfield-high)"
+
+                MDBoxLayout:
+                    id: email_row
+                    size_hint_y: None
+                    height: "56dp"
+                    opacity: 1
+
+                    MDTextField:
+                        id: email_field
+                        mode: "outlined"
+                        MDTextFieldLeadingIcon:
+                            icon: "email-outline"
+                        MDTextFieldHintText:
+                            text: "Email address"
+
+                MDBoxLayout:
+                    id: pwd_row
+                    size_hint_y: None
+                    height: "56dp"
+                    opacity: 1
+
+                    MDTextField:
+                        id: password_field
+                        mode: "outlined"
+                        password: True
+                        on_text_validate: root.do_login()
+                        MDTextFieldLeadingIcon:
+                            icon: "lock-outline"
+                        MDTextFieldHintText:
+                            text: "Password"
+
+                # ── Platform secret field ─────────────────────────────────
+                MDBoxLayout:
+                    id: secret_row
+                    size_hint_y: None
+                    height: "0dp"
+                    opacity: 0
+
+                    MDTextField:
+                        id: secret_field
+                        mode: "outlined"
+                        password: True
+                        on_text_validate: root.do_login()
+                        MDTextFieldLeadingIcon:
+                            icon: "key-outline"
+                        MDTextFieldHintText:
+                            text: "Platform secret"
+
+                Widget:
+                    size_hint_y: None
+                    height: "8dp"
+
+                MDBoxLayout:
+                    adaptive_height: True
+                    spacing: "16dp"
+
+                    MDButton:
+                        id: login_btn
+                        style: "filled"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        height: "48dp"
+                        on_release: root.do_login()
+                        MDButtonText:
+                            text: "Sign In"
+
+                    MDCircularProgressIndicator:
+                        id: spinner
+                        size_hint: None, None
+                        size: "40dp", "40dp"
+                        active: False
+                        pos_hint: {"center_y": 0.5}
+
+            Widget:
+                size_hint_y: 1

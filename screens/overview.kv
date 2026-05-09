@@ -1,0 +1,209 @@
+<OverviewScreen>:
+    name: "overview"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDScrollView:
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: True
+            padding: "32dp", "28dp"
+            spacing: "28dp"
+
+            # ── Header ────────────────────────────────────────────────────
+            MDBoxLayout:
+                orientation: "horizontal"
+                adaptive_height: True
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "2dp"
+                    size_hint_x: 1
+
+                    MDLabel:
+                        text: "Overview"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "School-wide snapshot"
+                        font_style: "Body"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDButton:
+                    style: "tonal"
+                    size_hint_y: None
+                    height: "44dp"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: root.load_charts()
+                    MDButtonIcon:
+                        icon: "chart-bar"
+                    MDButtonText:
+                        text: "Load Charts"
+
+            # ── Spinner ───────────────────────────────────────────────────
+            AnchorLayout:
+                id: spinner_box
+                size_hint_y: None
+                height: "0dp"
+                anchor_x: "center"
+                anchor_y: "center"
+                MDCircularProgressIndicator:
+                    id: spinner
+                    size_hint: None, None
+                    size: "40dp", "40dp"
+                    active: False
+
+            # ── Stat strip ────────────────────────────────────────────────
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: "96dp"
+                spacing: "1dp"
+                md_bg_color: app.theme_cls.surfaceContainerColor
+                radius: "12dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "24dp", "12dp"
+                    spacing: "2dp"
+                    MDLabel:
+                        id: stat_classes
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+                    MDLabel:
+                        text: "Classes"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "24dp", "12dp"
+                    spacing: "2dp"
+                    MDLabel:
+                        id: stat_teachers
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+                    MDLabel:
+                        text: "Teachers"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "24dp", "12dp"
+                    spacing: "2dp"
+                    MDLabel:
+                        id: stat_students
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+                    MDLabel:
+                        text: "Students"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "24dp", "12dp"
+                    spacing: "2dp"
+                    MDLabel:
+                        id: stat_present
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+                    MDLabel:
+                        text: "Present (4 wks)"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+            # ── Charts ────────────────────────────────────────────────────
+            MDGridLayout:
+                cols: 2
+                adaptive_height: True
+                spacing: "20dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "380dp"
+                    spacing: "8dp"
+                    md_bg_color: app.theme_cls.surfaceContainerColor
+                    radius: "12dp"
+                    padding: "20dp"
+
+                    MDLabel:
+                        text: "Attendance by Class"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        id: chart_bar_box
+                        size_hint_y: 1
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "380dp"
+                    spacing: "8dp"
+                    md_bg_color: app.theme_cls.surfaceContainerColor
+                    radius: "12dp"
+                    padding: "20dp"
+
+                    MDLabel:
+                        text: "Attendance Rate (%)"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        id: chart_rate_box
+                        size_hint_y: 1
+
+            Widget:
+                size_hint_y: None
+                height: "16dp"

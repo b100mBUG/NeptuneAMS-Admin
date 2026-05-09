@@ -1,0 +1,140 @@
+#:import dp kivy.metrics.dp
+
+<ClassRow>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: "61dp"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        padding: "16dp", "0dp"
+        spacing: "12dp"
+        size_hint_y: None
+        height: "60dp"
+
+        MDIcon:
+            icon: "google-classroom"
+            font_size: "28sp"
+            theme_text_color: "Primary"
+            size_hint: None, None
+            size: "28dp", "28dp"
+            pos_hint: {"center_y": 0.5}
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 1
+            pos_hint: {"center_y": 0.5}
+            spacing: "1dp"
+
+            MDLabel:
+                text: root.name
+                font_style: "Body"
+                role: "large"
+                bold: True
+                adaptive_height: True
+
+            MDLabel:
+                text: root.class_id
+                font_style: "Body"
+                role: "small"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+        MDIconButton:
+            icon: "pencil-outline"
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_rename()
+
+        MDIconButton:
+            icon: "delete-outline"
+            theme_icon_color: "Custom"
+            icon_color: 0.83, 0.18, 0.18, 1
+            pos_hint: {"center_y": 0.5}
+            on_release: root.on_delete()
+
+    MDDivider:
+
+
+<ClassesScreen>:
+    name: "classes"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Classes"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDTextField:
+                id: class_name_field
+                mode: "outlined"
+                size_hint_x: None
+                width: "280dp"
+                size_hint_y: None
+                height: "48dp"
+                pos_hint: {"center_y": 0.5}
+                on_text_validate: root.create_class()
+                MDTextFieldHintText:
+                    text: "New class name"
+                MDTextFieldLeadingIcon:
+                    icon: "google-classroom"
+
+            MDButton:
+                id: create_btn
+                style: "filled"
+                size_hint_y: None
+                height: "48dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.create_class()
+                MDButtonIcon:
+                    icon: "plus"
+                MDButtonText:
+                    text: "Create"
+
+            MDLabel:
+                id: count_lbl
+                text: ""
+                font_style: "Body"
+                role: "medium"
+                theme_text_color: "Secondary"
+                adaptive_size: True
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: False
+
+        MDRecycleView:
+            id: rv
+            viewclass: "ClassRow"
+            key_viewclass: "viewclass"
+            RecycleBoxLayout:
+                orientation: "vertical"
+                default_size: None, "60dp"
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height

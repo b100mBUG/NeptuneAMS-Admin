@@ -1,0 +1,299 @@
+#:import dp kivy.metrics.dp
+
+<AttendanceRow>:
+    orientation: "horizontal"
+    padding: "16dp", "0dp"
+    spacing: "8dp"
+    size_hint_y: None
+    height: "48dp"
+
+    MDLabel:
+        text: root.student_name
+        font_style: "Body"
+        role: "large"
+        adaptive_height: True
+        size_hint_x: 1
+        pos_hint: {"center_y": 0.5}
+
+    MDLabel:
+        text: root.adm_no
+        font_style: "Body"
+        role: "medium"
+        theme_text_color: "Secondary"
+        adaptive_height: True
+        size_hint_x: 0.22
+        pos_hint: {"center_y": 0.5}
+
+    MDLabel:
+        text: root.session_date
+        font_style: "Body"
+        role: "medium"
+        theme_text_color: "Secondary"
+        adaptive_height: True
+        size_hint_x: 0.18
+        pos_hint: {"center_y": 0.5}
+
+    MDLabel:
+        text: root.status_text
+        font_style: "Body"
+        role: "medium"
+        bold: True
+        adaptive_height: True
+        size_hint_x: 0.15
+        pos_hint: {"center_y": 0.5}
+        theme_text_color: "Custom"
+        text_color: root.status_color
+
+<AttendanceViewScreen>:
+    name: "attendance"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Attendance"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDButton:
+                id: class_btn
+                style: "tonal"
+                size_hint_y: None
+                height: "44dp"
+                pos_hint: {"center_y": 0.5}
+                on_release: root.open_class_menu()
+                MDButtonIcon:
+                    icon: "google-classroom"
+                MDButtonText:
+                    text: "Select class"
+
+            MDSegmentedButton:
+                size_hint_y: None
+                height: "44dp"
+                pos_hint: {"center_y": 0.5}
+                MDSegmentedButtonItem:
+                    active: True
+                    on_active: root.set_period("morning", args[1])
+                    MDSegmentButtonLabel:
+                        text: "Morning"
+                MDSegmentedButtonItem:
+                    on_active: root.set_period("evening", args[1])
+                    MDSegmentButtonLabel:
+                        text: "Evening"
+
+        MDDivider:
+
+        # ── Stats strip + donut ───────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "96dp"
+            md_bg_color: app.theme_cls.surfaceContainerLowestColor
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: 1
+                spacing: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "20dp", "10dp"
+                    MDLabel:
+                        id: stat_present
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.69, 0.30, 1
+                    MDLabel:
+                        text: "Present"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "20dp", "10dp"
+                    MDLabel:
+                        id: stat_absent
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.83, 0.18, 0.18, 1
+                    MDLabel:
+                        text: "Absent"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "20dp", "10dp"
+                    MDLabel:
+                        id: stat_late
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.87, 0.55, 0.06, 1
+                    MDLabel:
+                        text: "Late"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "20dp", "10dp"
+                    MDLabel:
+                        id: stat_excused
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.20, 0.50, 0.85, 1
+                    MDLabel:
+                        text: "Excused"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                MDDivider:
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "1dp"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: "20dp", "10dp"
+                    MDLabel:
+                        id: stat_total
+                        text: "—"
+                        font_style: "Display"
+                        role: "small"
+                        bold: True
+                        adaptive_height: True
+                    MDLabel:
+                        text: "Total"
+                        font_style: "Label"
+                        role: "large"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+            MDBoxLayout:
+                id: donut_box
+                size_hint_x: None
+                width: "100dp"
+                padding: "4dp"
+
+        MDDivider:
+
+        AnchorLayout:
+            id: spinner_box
+            size_hint_y: None
+            height: "0dp"
+            anchor_x: "center"
+            anchor_y: "center"
+            MDCircularProgressIndicator:
+                id: spinner
+                size_hint: None, None
+                size: "40dp", "40dp"
+                active: False
+
+        # ── Table header ──────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "40dp"
+            padding: "16dp", "0dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Student"
+                font_style: "Label"
+                role: "large"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: "Adm No"
+                font_style: "Label"
+                role: "large"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 0.22
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: "Date"
+                font_style: "Label"
+                role: "large"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 0.18
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: "Status"
+                font_style: "Label"
+                role: "large"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 0.15
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        MDRecycleView:
+            id: rv
+            viewclass: "AttendanceRow"
+            RecycleBoxLayout:
+                orientation: "vertical"
+                default_size: None, "48dp"
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height

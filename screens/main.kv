@@ -1,0 +1,201 @@
+<MainScreen>:
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDNavigationLayout:
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            drawer_type: "standard"
+            state: "open"
+            radius: 0, 0, 0, 0
+            size_hint_x: None
+            width: "256dp"
+            md_bg_color: app.theme_cls.surfaceContainerLowColor
+            elevation_level: 0
+
+            MDNavigationDrawerMenu:
+
+                # ── Brand ─────────────────────────────────────────────────
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    padding: "20dp", "28dp", "20dp", "12dp"
+                    spacing: "4dp"
+
+                    MDLabel:
+                        text: "NeptuneAMS"
+                        font_style: "Title"
+                        role: "large"
+                        halign: "center"
+                        bold: True
+                        adaptive_height: True
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Administrator Dashboard"
+                        font_style: "Body"
+                        halign: "center"
+                        role: "small"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+                    Widget:
+
+                MDNavigationDrawerDivider:
+
+                # ── Profile ───────────────────────────────────────────────
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    adaptive_height: True
+                    padding: "16dp", "10dp"
+                    spacing: "12dp"
+
+                    MDIcon:
+                        icon: "account-circle"
+                        font_size: "40sp"
+                        theme_text_color: "Primary"
+                        size_hint: None, None
+                        size: "40dp", "40dp"
+                        pos_hint: {"center_y": 0.5}
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        pos_hint: {"center_y": 0.5}
+                        spacing: "1dp"
+
+                        MDLabel:
+                            id: drawer_name
+                            text: ""
+                            font_style: "Body"
+                            role: "large"
+                            bold: True
+                            adaptive_height: True
+
+                        MDLabel:
+                            id: drawer_email
+                            text: ""
+                            font_style: "Body"
+                            role: "small"
+                            theme_text_color: "Secondary"
+                            adaptive_height: True
+
+                        MDLabel:
+                            id: drawer_school
+                            text: ""
+                            font_style: "Body"
+                            role: "small"
+                            theme_text_color: "Primary"
+                            adaptive_height: True
+
+                MDNavigationDrawerDivider:
+
+                MDNavigationDrawerLabel:
+                    text: "MENU"
+
+                # ── Platform only ─────────────────────────────────────────
+                MDNavigationDrawerItem:
+                    id: nav_schools
+                    height: "0dp"
+                    opacity: 0
+                    on_release: root.nav_to("schools")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "domain"
+                    MDNavigationDrawerItemText:
+                        text: "Schools"
+
+                MDNavigationDrawerItem:
+                    id: nav_platform_reports
+                    height: "0dp"
+                    opacity: 0
+                    on_release: root.nav_to("platform_reports")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "file-chart-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Reports"
+
+                MDNavigationDrawerItem:
+                    id: nav_payments
+                    height: "0dp"
+                    opacity: 0
+                    on_release: root.nav_to("payments")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "credit-card-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Payments"
+
+                # ── Admin only ────────────────────────────────────────────
+                MDNavigationDrawerItem:
+                    id: nav_overview
+                    on_release: root.nav_to("overview")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "view-dashboard-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Overview"
+
+                MDNavigationDrawerItem:
+                    id: nav_classes
+                    on_release: root.nav_to("classes")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "google-classroom"
+                    MDNavigationDrawerItemText:
+                        text: "Classes"
+
+                MDNavigationDrawerItem:
+                    id: nav_teachers
+                    on_release: root.nav_to("teachers")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "human-male-board"
+                    MDNavigationDrawerItemText:
+                        text: "Teachers"
+
+                MDNavigationDrawerItem:
+                    id: nav_students
+                    on_release: root.nav_to("students")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "account-group-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Students"
+
+                MDNavigationDrawerItem:
+                    id: nav_attendance
+                    on_release: root.nav_to("attendance")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "clipboard-check-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Attendance"
+
+                MDNavigationDrawerItem:
+                    id: nav_analytics
+                    on_release: root.nav_to("analytics")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "chart-bar"
+                    MDNavigationDrawerItemText:
+                        text: "Analytics"
+
+                MDNavigationDrawerItem:
+                    id: nav_reports
+                    on_release: root.nav_to("reports")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "file-download-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Reports"
+
+                MDNavigationDrawerItem:
+                    id: nav_subscription
+                    on_release: root.nav_to("subscription")
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "shield-check-outline"
+                    MDNavigationDrawerItemText:
+                        text: "Subscription"
+
+                MDNavigationDrawerDivider:
+
+                MDNavigationDrawerItem:
+                    on_release: root.do_logout()
+                    MDNavigationDrawerItemLeadingIcon:
+                        icon: "logout"
+                    MDNavigationDrawerItemText:
+                        text: "Sign Out"
+
+        MDScreenManager:
+            id: content_manager

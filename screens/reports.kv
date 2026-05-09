@@ -1,0 +1,352 @@
+#:import dp kivy.metrics.dp
+
+<ReportsScreen>:
+    name: "reports"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # ── Top bar ───────────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            spacing: "16dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "Reports"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                size_hint_x: 1
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "32dp", "24dp"
+                spacing: "24dp"
+
+                # ── Date Range ────────────────────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "14dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Date Range"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "8dp"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_week()
+                            MDChipLeadingIcon:
+                                icon: "calendar-week"
+                            MDChipText:
+                                text: "This week"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_month()
+                            MDChipLeadingIcon:
+                                icon: "calendar-month"
+                            MDChipText:
+                                text: "This month"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_term()
+                            MDChipLeadingIcon:
+                                icon: "calendar-range"
+                            MDChipText:
+                                text: "Last term"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            size_hint_x: 0.5
+                            spacing: "4dp"
+                            MDLabel:
+                                text: "Start date"
+                                font_style: "Label"
+                                role: "large"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+                            MDButton:
+                                style: "outlined"
+                                size_hint_y: None
+                                height: "48dp"
+                                on_release: root.pick_start()
+                                MDButtonIcon:
+                                    icon: "calendar-start"
+                                MDButtonText:
+                                    id: lbl_start
+                                    text: "—"
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            size_hint_x: 0.5
+                            spacing: "4dp"
+                            MDLabel:
+                                text: "End date"
+                                font_style: "Label"
+                                role: "large"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+                            MDButton:
+                                style: "outlined"
+                                size_hint_y: None
+                                height: "48dp"
+                                on_release: root.pick_end()
+                                MDButtonIcon:
+                                    icon: "calendar-end"
+                                MDButtonText:
+                                    id: lbl_end
+                                    text: "—"
+
+                # ── Status / spinner ──────────────────────────────────────
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    adaptive_height: True
+                    spacing: "16dp"
+
+                    AnchorLayout:
+                        id: spinner_box
+                        size_hint_y: None
+                        height: "0dp"
+                        size_hint_x: None
+                        width: "48dp"
+                        MDCircularProgressIndicator:
+                            id: spinner
+                            size_hint: None, None
+                            size: "36dp", "36dp"
+                            active: False
+
+                    MDLabel:
+                        id: lbl_status
+                        text: ""
+                        font_style: "Body"
+                        role: "medium"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                # ── 1 & 2 & 3 — Class reports ─────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "16dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Class Reports"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDButton:
+                            id: btn_class
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "44dp"
+                            on_release: root.open_class_menu()
+                            MDButtonIcon:
+                                icon: "google-classroom"
+                            MDButtonText:
+                                id: lbl_class
+                                text: "Select class"
+
+                        MDTextField:
+                            id: tf_period
+                            mode: "outlined"
+                            size_hint_x: 1
+                            size_hint_y: None
+                            height: "52dp"
+                            pos_hint: {"center_y": 0.5}
+                            MDTextFieldHintText:
+                                text: "Period (optional)"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "12dp"
+
+                        MDButton:
+                            id: btn_class_csv
+                            style: "filled"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_class_csv()
+                            MDButtonIcon:
+                                icon: "file-delimited-outline"
+                            MDButtonText:
+                                text: "Attendance CSV"
+
+                        MDButton:
+                            id: btn_class_att_pdf
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_class_att_pdf()
+                            MDButtonIcon:
+                                icon: "file-pdf-box"
+                            MDButtonText:
+                                text: "Attendance PDF"
+
+                        MDButton:
+                            id: btn_class_analysis
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_class_analysis_pdf()
+                            MDButtonIcon:
+                                icon: "chart-box-outline"
+                            MDButtonText:
+                                text: "Analysis PDF"
+
+                # ── 4 — Student analysis PDF ──────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "16dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Student Report"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Select a class above first — students load automatically."
+                        font_style: "Body"
+                        role: "small"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDButton:
+                            id: btn_student
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "44dp"
+                            on_release: root.open_student_menu()
+                            MDButtonIcon:
+                                icon: "account-outline"
+                            MDButtonText:
+                                id: lbl_student
+                                text: "Select student"
+
+                        MDButton:
+                            id: btn_student_pdf
+                            style: "filled"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_student_pdf()
+                            MDButtonIcon:
+                                icon: "file-pdf-box"
+                            MDButtonText:
+                                text: "Student Analysis PDF"
+
+                # ── 5 & 6 — Teacher reports ───────────────────────────────
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "16dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Teacher Reports"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDButton:
+                            id: btn_teacher
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "44dp"
+                            on_release: root.open_teacher_menu()
+                            MDButtonIcon:
+                                icon: "human-male-board"
+                            MDButtonText:
+                                id: lbl_teacher
+                                text: "Select teacher"
+
+                        MDButton:
+                            id: btn_teacher_pdf
+                            style: "filled"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_teacher_pdf()
+                            MDButtonIcon:
+                                icon: "file-pdf-box"
+                            MDButtonText:
+                                text: "Teacher Activity PDF"
+
+                        MDButton:
+                            id: btn_teacher_comparison
+                            style: "tonal"
+                            size_hint_y: None
+                            height: "48dp"
+                            on_release: root.dl_teacher_comparison_pdf()
+                            MDButtonIcon:
+                                icon: "chart-bar"
+                            MDButtonText:
+                                text: "All Teachers Comparison PDF"
+
+                Widget:
+                    size_hint_y: None
+                    height: "24dp"

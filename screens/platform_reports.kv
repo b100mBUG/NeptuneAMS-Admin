@@ -1,0 +1,203 @@
+#:import dp kivy.metrics.dp
+
+<PlatformReportsScreen>:
+    name: "platform_reports"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "72dp"
+            padding: "32dp", "0dp"
+            md_bg_color: app.theme_cls.surfaceContainerColor
+
+            MDLabel:
+                text: "School Overview Report"
+                font_style: "Headline"
+                role: "small"
+                bold: True
+                adaptive_height: True
+                pos_hint: {"center_y": 0.5}
+
+        MDDivider:
+
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "32dp", "24dp"
+                spacing: "24dp"
+
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "16dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Select School"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDButton:
+                        id: btn_school
+                        style: "tonal"
+                        size_hint_y: None
+                        height: "44dp"
+                        on_release: root.open_school_menu()
+                        MDButtonIcon:
+                            icon: "domain"
+                        MDButtonText:
+                            id: lbl_school
+                            text: "Select school"
+
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "14dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Date Range"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "8dp"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_week()
+                            MDChipText:
+                                text: "This week"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_month()
+                            MDChipText:
+                                text: "This month"
+
+                        MDChip:
+                            type: "filter"
+                            size_hint_y: None
+                            height: "36dp"
+                            on_release: root.set_range_term()
+                            MDChipText:
+                                text: "Last term"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            size_hint_x: 0.5
+                            spacing: "4dp"
+                            MDLabel:
+                                text: "Start date"
+                                font_style: "Label"
+                                role: "large"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+                            MDButton:
+                                style: "outlined"
+                                size_hint_y: None
+                                height: "48dp"
+                                on_release: root.pick_start()
+                                MDButtonIcon:
+                                    icon: "calendar-start"
+                                MDButtonText:
+                                    id: lbl_start
+                                    text: "—"
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            adaptive_height: True
+                            size_hint_x: 0.5
+                            spacing: "4dp"
+                            MDLabel:
+                                text: "End date"
+                                font_style: "Label"
+                                role: "large"
+                                theme_text_color: "Secondary"
+                                adaptive_height: True
+                            MDButton:
+                                style: "outlined"
+                                size_hint_y: None
+                                height: "48dp"
+                                on_release: root.pick_end()
+                                MDButtonIcon:
+                                    icon: "calendar-end"
+                                MDButtonText:
+                                    id: lbl_end
+                                    text: "—"
+
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    radius: [dp(16)]
+                    padding: "24dp"
+                    spacing: "16dp"
+                    adaptive_height: True
+
+                    MDLabel:
+                        text: "Download"
+                        font_style: "Title"
+                        role: "medium"
+                        bold: True
+                        adaptive_height: True
+
+                    MDButton:
+                        id: btn_dl
+                        style: "filled"
+                        size_hint_y: None
+                        height: "52dp"
+                        on_release: root.download_overview()
+                        MDButtonIcon:
+                            icon: "file-pdf-box"
+                        MDButtonText:
+                            text: "Download School Overview PDF"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        adaptive_height: True
+                        spacing: "16dp"
+
+                        AnchorLayout:
+                            id: spinner_box
+                            size_hint_y: None
+                            height: "0dp"
+                            size_hint_x: None
+                            width: "48dp"
+                            MDCircularProgressIndicator:
+                                id: spinner
+                                size_hint: None, None
+                                size: "36dp", "36dp"
+                                active: False
+
+                        MDLabel:
+                            id: lbl_status
+                            text: ""
+                            font_style: "Body"
+                            role: "medium"
+                            theme_text_color: "Secondary"
+                            adaptive_height: True
