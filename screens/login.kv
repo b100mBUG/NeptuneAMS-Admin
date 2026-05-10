@@ -258,6 +258,7 @@
                     size_hint_y: None
                     height: "56dp"
                     opacity: 1
+                    spacing: dp(7)
 
                     MDTextField:
                         id: password_field
@@ -268,6 +269,15 @@
                             icon: "lock-outline"
                         MDTextFieldHintText:
                             text: "Password"
+
+                    MDIconButton:
+                        icon: "eye"
+                        style: "tonal"
+                        pos_hint: {"center_y": 0.5}
+                        on_release: 
+                            password_field.password = False if password_field.password == True else True
+                            self.icon = "eye" if password_field.password == True else "eye-off"
+                Widget:
 
                 # ── Platform secret field ─────────────────────────────────
                 MDBoxLayout:
@@ -284,7 +294,7 @@
                         MDTextFieldLeadingIcon:
                             icon: "key-outline"
                         MDTextFieldHintText:
-                            text: "Platform secret"
+                            text: "Platform Key"
 
                 Widget:
                     size_hint_y: None

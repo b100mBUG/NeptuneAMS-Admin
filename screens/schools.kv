@@ -192,6 +192,14 @@
                         text: "Password (min 8)"
                     MDTextFieldLeadingIcon:
                         icon: "lock-outline"
+                
+                MDIconButton:
+                    icon: "eye"
+                    style: "tonal"
+                    pos_hint: {"center_y": 0.5}
+                    on_release: 
+                        f_admin_pwd.password = False if f_admin_pwd.password == True else True
+                        self.icon = "eye" if f_admin_pwd.password == True else "eye-off"
 
                 MDButton:
                     id: provision_btn
@@ -205,6 +213,7 @@
                         icon: "plus"
                     MDButtonText:
                         text: "Provision"
+                
 
         MDDivider:
 

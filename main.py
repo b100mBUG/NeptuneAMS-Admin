@@ -1,7 +1,6 @@
 import os
 os.environ.setdefault("KIVY_ORIENTATION", "landscape")
 
-from kivy.core.window import Window
 
 from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager

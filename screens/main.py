@@ -17,10 +17,10 @@ class MainScreen(MDScreen):
     _PLATFORM_SECTIONS = ("schools", "platform_reports", "payments")
 
     def on_enter(self, *args):
-        name = self.user.get("name", "") if self.user else ""
+        name = self.user.get("name", "") if self.user else "King Kastro"
         self.ids.drawer_name.text  = (
             name or ("Platform Admin" if self.role == "platform" else "Admin"))
-        self.ids.drawer_email.text  = self.user.get("email", "") if self.user else ""
+        self.ids.drawer_email.text  = self.user.get("email", "") if self.user else "werecastro2006@gmail.com"
         self.ids.drawer_school.text = (
             "Platform Management" if self.role == "platform" else self.school_name)
 

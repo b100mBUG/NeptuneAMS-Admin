@@ -205,7 +205,7 @@ class AdminLoginScreen(MDScreen):
         if self._mode == "platform":
             secret = self.ids.secret_field.text.strip()
             if not secret:
-                self._on_error("Enter the platform secret")
+                self._on_error("Enter the platform key")
                 return
             from api.client import platform_login
             platform_login(secret, self._on_platform_success, self._on_error)

@@ -141,6 +141,14 @@
                     text: "Password (min 8)"
                 MDTextFieldLeadingIcon:
                     icon: "lock-outline"
+            
+            MDIconButton:
+                icon: "eye"
+                style: "tonal"
+                pos_hint: {"center_y": 0.5}
+                on_release: 
+                    teacher_pwd.password = False if teacher_pwd.password == True else True
+                    self.icon = "eye" if teacher_pwd.password == True else "eye-off"
 
             MDButton:
                 id: class_btn
